@@ -2,7 +2,7 @@
 
 namespace EventosAPI.Models
 {
-    public class Eventos
+    public class Evento
     {
         [Key]
         public int Id { get; set; }
@@ -18,5 +18,8 @@ namespace EventosAPI.Models
         [Required]
         [StringLength(100, MinimumLength = 5)]
         public string Lugar { get; set; }
+
+        public ICollection<Participante> Participantes { get; set; }
+        public ICollection<Organizador> Organizadores { get; set; }
     }
 }

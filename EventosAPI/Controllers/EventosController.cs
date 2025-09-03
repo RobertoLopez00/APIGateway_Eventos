@@ -22,14 +22,14 @@ namespace EventosAPI.Controllers
 
         // GET: api/Eventos
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Eventos>>> GetEventos()
+        public async Task<ActionResult<IEnumerable<Evento>>> GetEventos()
         {
             return await _context.Eventos.ToListAsync();
         }
 
         // GET: api/Eventos/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Eventos>> GetEventos(int id)
+        public async Task<ActionResult<Evento>> GetEventos(int id)
         {
             var eventos = await _context.Eventos.FindAsync(id);
 
@@ -44,7 +44,7 @@ namespace EventosAPI.Controllers
         // PUT: api/Eventos/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutEventos(int id, Eventos eventos)
+        public async Task<IActionResult> PutEventos(int id, Evento eventos)
         {
             if (id != eventos.Id)
             {
@@ -75,7 +75,7 @@ namespace EventosAPI.Controllers
         // POST: api/Eventos
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Eventos>> PostEventos(Eventos eventos)
+        public async Task<ActionResult<Evento>> PostEventos(Evento eventos)
         {
             _context.Eventos.Add(eventos);
             await _context.SaveChangesAsync();

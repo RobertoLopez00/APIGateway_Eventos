@@ -6,7 +6,7 @@
       "DownstreamHostAndPorts": [
         {
           "Host": "localhost",
-          "Port": 5000
+          "Port": 7037
         }
       ],
       "UpstreamPathTemplate": "/eventos",
@@ -30,7 +30,7 @@
       "DownstreamHostAndPorts": [
         {
           "Host": "localhost",
-          "Port": 5000
+          "Port": 7037
         }
       ],
       "UpstreamPathTemplate": "/eventos/{id}",
@@ -54,7 +54,7 @@
       "DownstreamHostAndPorts": [
         {
           "Host": "localhost",
-          "Port": 5000
+          "Port": 7037
         }
       ],
       "UpstreamPathTemplate": "/eventos",
@@ -78,7 +78,7 @@
       "DownstreamHostAndPorts": [
         {
           "Host": "localhost",
-          "Port": 5000
+          "Port": 7037
         }
       ],
       "UpstreamPathTemplate": "/eventos/{id}",
@@ -102,7 +102,7 @@
       "DownstreamHostAndPorts": [
         {
           "Host": "localhost",
-          "Port": 5000
+          "Port": 7037
         }
       ],
       "UpstreamPathTemplate": "/eventos/{id}",
@@ -127,7 +127,7 @@
       "DownstreamHostAndPorts": [
         {
           "Host": "localhost",
-          "Port": 5000
+          "Port": 7037
         }
       ],
       "UpstreamPathTemplate": "/participantes",
@@ -151,7 +151,7 @@
       "DownstreamHostAndPorts": [
         {
           "Host": "localhost",
-          "Port": 5000
+          "Port": 7037
         }
       ],
       "UpstreamPathTemplate": "/participantes/{id}",
@@ -175,7 +175,7 @@
       "DownstreamHostAndPorts": [
         {
           "Host": "localhost",
-          "Port": 5000
+          "Port": 7037
         }
       ],
       "UpstreamPathTemplate": "/participantes",
@@ -199,7 +199,7 @@
       "DownstreamHostAndPorts": [
         {
           "Host": "localhost",
-          "Port": 5000
+          "Port": 7037
         }
       ],
       "UpstreamPathTemplate": "/participantes/{id}",
@@ -223,7 +223,7 @@
       "DownstreamHostAndPorts": [
         {
           "Host": "localhost",
-          "Port": 5000
+          "Port": 7037
         }
       ],
       "UpstreamPathTemplate": "/participantes/{id}",
@@ -248,7 +248,7 @@
       "DownstreamHostAndPorts": [
         {
           "Host": "localhost",
-          "Port": 5000
+          "Port": 7037
         }
       ],
       "UpstreamPathTemplate": "/organizadores",
@@ -272,7 +272,7 @@
       "DownstreamHostAndPorts": [
         {
           "Host": "localhost",
-          "Port": 5000
+          "Port": 7037
         }
       ],
       "UpstreamPathTemplate": "/organizadores/{id}",
@@ -296,7 +296,7 @@
       "DownstreamHostAndPorts": [
         {
           "Host": "localhost",
-          "Port": 5000
+          "Port": 7037
         }
       ],
       "UpstreamPathTemplate": "/organizadores",
@@ -320,7 +320,7 @@
       "DownstreamHostAndPorts": [
         {
           "Host": "localhost",
-          "Port": 5000
+          "Port": 7037
         }
       ],
       "UpstreamPathTemplate": "/organizadores/{id}",
@@ -344,7 +344,7 @@
       "DownstreamHostAndPorts": [
         {
           "Host": "localhost",
-          "Port": 5000
+          "Port": 7037
         }
       ],
       "UpstreamPathTemplate": "/organizadores/{id}",
@@ -364,7 +364,7 @@
     }
   ],
   "GlobalConfiguration": {
-    "BaseUrl": "https://localhost:7000",
+    "BaseUrl": "https://localhost:7045",
     "SwaggerEndPoints": [
       {
         "Key": "Eventos",
@@ -373,7 +373,7 @@
             "Name": "Eventos API",
             "Scheme": "https",
             "Host": "localhost",
-            "Port": 5000,
+            "Port": 7037,
             "Path": "/openapi/v1.json"
           }
         ]

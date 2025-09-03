@@ -22,14 +22,14 @@ namespace EventosAPI.Controllers
 
         // GET: api/Participantes
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Participantes>>> GetParticipantes()
+        public async Task<ActionResult<IEnumerable<Participante>>> GetParticipantes()
         {
             return await _context.Participantes.ToListAsync();
         }
 
         // GET: api/Participantes/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Participantes>> GetParticipantes(int id)
+        public async Task<ActionResult<Participante>> GetParticipantes(int id)
         {
             var participantes = await _context.Participantes.FindAsync(id);
 
@@ -44,7 +44,7 @@ namespace EventosAPI.Controllers
         // PUT: api/Participantes/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutParticipantes(int id, Participantes participantes)
+        public async Task<IActionResult> PutParticipantes(int id, Participante participantes)
         {
             if (id != participantes.Id)
             {
@@ -75,7 +75,7 @@ namespace EventosAPI.Controllers
         // POST: api/Participantes
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Participantes>> PostParticipantes(Participantes participantes)
+        public async Task<ActionResult<Participante>> PostParticipantes(Participante participantes)
         {
             _context.Participantes.Add(participantes);
             await _context.SaveChangesAsync();

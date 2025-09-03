@@ -1,8 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace EventosAPI.Models
 {
-    public class Organizadores
+    public class Participante
     {
         [Key]
         public int Id { get; set; }
@@ -12,11 +13,12 @@ namespace EventosAPI.Models
         public string Nombre { get; set; }
 
         [Required]
-        [StringLength(50, MinimumLength = 3)]
-        public string Cargo { get; set; }
+        [EmailAddress]
+        public string Email { get; set; }
 
         [Required]
-        public int EventoId { get; set; }
-        public Eventos Evento { get; set; }
+        [ForeignKey("Evento")]
+        public int? EventoId { get; set; }
+        public Evento Evento { get; set; }
     }
 }
