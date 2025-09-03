@@ -5,11 +5,11 @@
       "UpstreamPathTemplate": "/eventos",
       "UpstreamHttpMethod": [ "GET", "POST" ],
       "DownstreamPathTemplate": "/api/eventos",
-      "DownstreamScheme": "https",
+      "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 7037
+          "Host": "eventosapi",
+          "Port": 8080
         }
       ],
       "SwaggerKey": "Eventos",
@@ -28,11 +28,11 @@
       "UpstreamPathTemplate": "/eventos/{id}",
       "UpstreamHttpMethod": [ "GET", "PUT", "DELETE" ],
       "DownstreamPathTemplate": "/api/eventos/{id}",
-      "DownstreamScheme": "https",
+      "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 7037
+          "Host": "eventosapi",
+          "Port": 8080
         }
       ],
       "SwaggerKey": "Eventos",
@@ -53,11 +53,11 @@
       "UpstreamPathTemplate": "/participantes",
       "UpstreamHttpMethod": [ "GET", "POST" ],
       "DownstreamPathTemplate": "/api/participantes",
-      "DownstreamScheme": "https",
+      "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 7037
+          "Host": "eventosapi",
+          "Port": 8080
         }
       ],
       "SwaggerKey": "Eventos",
@@ -76,11 +76,11 @@
       "UpstreamPathTemplate": "/participantes/{id}",
       "UpstreamHttpMethod": [ "GET", "PUT", "DELETE" ],
       "DownstreamPathTemplate": "/api/participantes/{id}",
-      "DownstreamScheme": "https",
+      "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 7037
+          "Host": "eventosapi",
+          "Port": 8080
         }
       ],
       "SwaggerKey": "Eventos",
@@ -101,11 +101,11 @@
       "UpstreamPathTemplate": "/organizadores",
       "UpstreamHttpMethod": [ "GET", "POST" ],
       "DownstreamPathTemplate": "/api/organizadores",
-      "DownstreamScheme": "https",
+      "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 7037
+          "Host": "eventosapi",
+          "Port": 8080
         }
       ],
       "SwaggerKey": "Eventos",
@@ -124,11 +124,11 @@
       "UpstreamPathTemplate": "/organizadores/{id}",
       "UpstreamHttpMethod": [ "GET", "PUT", "DELETE" ],
       "DownstreamPathTemplate": "/api/organizadores/{id}",
-      "DownstreamScheme": "https",
+      "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 7037
+          "Host": "eventosapi",
+          "Port": 8080
         }
       ],
       "SwaggerKey": "Eventos",
@@ -145,7 +145,7 @@
     }
   ],
   "GlobalConfiguration": {
-    "BaseUrl": "https://localhost:7045",
+    "BaseUrl": "https://localhost:8081",
     "SwaggerEndPoints": [
       {
         "Key": "Eventos",
@@ -153,8 +153,8 @@
           {
             "Name": "Eventos API",
             "Scheme": "https",
-            "Host": "localhost",
-            "Port": 7037,
+            "Host": "eventosapi",
+            "Port": 8080,
             "Path": "/openapi/v1.json"
           }
         ]

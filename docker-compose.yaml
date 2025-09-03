@@ -1,0 +1,35 @@
+services:
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: sqlserver
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=Your_password123
+    ports:
+      - "1433:1433"
+
+  eventosapi:
+    build:
+      context: .
+      dockerfile: EventosAPI/Dockerfile
+    container_name: eventosapi
+    environment:
+      - ASPNETCORE_URLS=http://+:8080
+      - ConnectionStrings__DefaultConnection=Server=sqlserver;Database=EventosDb;User Id=sa;Password=Your_password123;TrustServerCertificate=True;Encrypt=False;
+    depends_on:
+      sqlserver:
+        condition: service_healthy
+    ports:
+      - "8080:8080"
+
+  apigateway:
+    build:
+      context: .
+      dockerfile: APIGateway_Eventos/Dockerfile
+    container_name: apigateway
+    environment:
+      - ASPNETCORE_URLS=http://+:8081
+    depends_on:
+      - eventosapi
+    ports:
+      - "8081:8081"
