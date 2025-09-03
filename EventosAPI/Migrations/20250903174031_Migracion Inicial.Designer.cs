@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EventosAPI.Migrations
 {
     [DbContext(typeof(EventoContext))]
-    [Migration("20250901163148_Migracion inicial")]
-    partial class Migracioninicial
+    [Migration("20250903174031_Migracion Inicial")]
+    partial class MigracionInicial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -25,7 +25,7 @@ namespace EventosAPI.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("EventosAPI.Models.Eventos", b =>
+            modelBuilder.Entity("EventosAPI.Models.Evento", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -67,7 +67,7 @@ namespace EventosAPI.Migrations
                         });
                 });
 
-            modelBuilder.Entity("EventosAPI.Models.Organizadores", b =>
+            modelBuilder.Entity("EventosAPI.Models.Organizador", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -111,7 +111,7 @@ namespace EventosAPI.Migrations
                         });
                 });
 
-            modelBuilder.Entity("EventosAPI.Models.Participantes", b =>
+            modelBuilder.Entity("EventosAPI.Models.Participante", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -154,10 +154,10 @@ namespace EventosAPI.Migrations
                         });
                 });
 
-            modelBuilder.Entity("EventosAPI.Models.Organizadores", b =>
+            modelBuilder.Entity("EventosAPI.Models.Organizador", b =>
                 {
-                    b.HasOne("EventosAPI.Models.Eventos", "Evento")
-                        .WithMany()
+                    b.HasOne("EventosAPI.Models.Evento", "Evento")
+                        .WithMany("Organizadores")
                         .HasForeignKey("EventoId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -165,15 +165,22 @@ namespace EventosAPI.Migrations
                     b.Navigation("Evento");
                 });
 
-            modelBuilder.Entity("EventosAPI.Models.Participantes", b =>
+            modelBuilder.Entity("EventosAPI.Models.Participante", b =>
                 {
-                    b.HasOne("EventosAPI.Models.Eventos", "Evento")
-                        .WithMany()
+                    b.HasOne("EventosAPI.Models.Evento", "Evento")
+                        .WithMany("Participantes")
                         .HasForeignKey("EventoId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Evento");
+                });
+
+            modelBuilder.Entity("EventosAPI.Models.Evento", b =>
+                {
+                    b.Navigation("Organizadores");
+
+                    b.Navigation("Participantes");
                 });
 #pragma warning restore 612, 618
         }

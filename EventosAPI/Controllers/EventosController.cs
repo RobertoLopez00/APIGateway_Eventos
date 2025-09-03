@@ -23,9 +23,22 @@ namespace EventosAPI.Controllers
 
         // GET: api/Eventos
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Evento>>> GetEventos()
+        public async Task<ActionResult<IEnumerable<object>>> GetEventos()
         {
-            return await _context.Eventos.ToListAsync();
+            var eventos = await _context.Eventos
+                .Include(e => e.Participantes)
+                .Include(e => e.Organizadores)
+                .Select(x => new {
+                    x.Id,
+                    x.Nombre,
+                    x.Fecha,
+                    x.Lugar,
+                    Participantes = x.Participantes.Select(p => new { p.Id, p.Nombre, p.Email }),
+                    Organizadores = x.Organizadores.Select(o => new { o.Id, o.Nombre, o.Cargo })
+                })
+                .ToListAsync();
+
+            return eventos;
         }
 
         // GET: api/Eventos/5
