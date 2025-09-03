@@ -19,7 +19,7 @@ namespace EventosAPI.Models
         [StringLength(100, MinimumLength = 5)]
         public string Lugar { get; set; }
 
-        public ICollection<Participante> Participantes { get; set; }
-        public ICollection<Organizador> Organizadores { get; set; }
+        public ICollection<Participante> Participantes { get; set;  } = new List<Participante>();
+        public ICollection<Organizador> Organizadores { get; set; } = new List<Organizador>();
     }
 }

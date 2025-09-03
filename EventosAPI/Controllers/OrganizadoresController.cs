@@ -1,11 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using EventosAPI.Models;
+using EventosAPI.Models.DTOs;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using EventosAPI.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace EventosAPI.Controllers
 {
@@ -44,14 +45,17 @@ namespace EventosAPI.Controllers
         // PUT: api/Organizadores/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutOrganizadores(int id, Organizador organizadores)
+        public async Task<IActionResult> PutOrganizador(int id, [FromBody] UpdateOrganizadorDto dto)
         {
-            if (id != organizadores.Id)
+            var organizador = await _context.Organizadores.FindAsync(id);
+            if (organizador == null)
             {
-                return BadRequest();
+                return NotFound(new { message = $"No existe un organizador con id {id}" });
             }
 
-            _context.Entry(organizadores).State = EntityState.Modified;
+            organizador.Nombre = dto.Nombre;
+            organizador.Cargo = dto.Cargo;
+            organizador.EventoId = dto.EventoId;
 
             try
             {
@@ -59,18 +63,13 @@ namespace EventosAPI.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!OrganizadoresExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                    new { message = "Error de concurrencia al actualizar el organizador" });
             }
 
-            return NoContent();
+            return Ok(organizador); // o NoContent() si prefieres no devolver nada
         }
+
 
         // POST: api/Organizadores
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754

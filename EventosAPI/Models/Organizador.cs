@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace EventosAPI.Models
 {
@@ -16,9 +17,10 @@ namespace EventosAPI.Models
         [StringLength(50, MinimumLength = 3)]
         public string Cargo { get; set; }
 
-        [Required]
         [ForeignKey("Evento")]
-        public int? EventoId { get; set; }
-        public Evento Evento { get; set; }
+        public int EventoId { get; set; }
+
+        [JsonIgnore]
+        public Evento? Evento { get; set; }
     }
 }

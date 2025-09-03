@@ -1,11 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using EventosAPI.Models;
+using EventosAPI.Models.DTOs;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using EventosAPI.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace EventosAPI.Controllers
 {
@@ -43,15 +44,23 @@ namespace EventosAPI.Controllers
 
         // PUT: api/Participantes/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutParticipantes(int id, Participante participantes)
+        [HttpPut("{id:int}")]
+        public async Task<IActionResult> PutParticipante(int id, [FromBody] UpdateParticipanteDto dto)
         {
-            if (id != participantes.Id)
-            {
-                return BadRequest();
-            }
+            if (!ModelState.IsValid)
+                return ValidationProblem(ModelState);
 
-            _context.Entry(participantes).State = EntityState.Modified;
+            var participante = await _context.Participantes.FindAsync(id);
+            if (participante == null)
+                return NotFound(new { message = $"No existe un participante con id {id}" });
+
+            var eventoExiste = await _context.Eventos.AnyAsync(e => e.Id == dto.EventoId);
+            if (!eventoExiste)
+                return UnprocessableEntity(new { message = $"No existe un evento con id {dto.EventoId}" });
+
+            participante.Nombre = dto.Nombre;
+            participante.Email = dto.Email;
+            participante.EventoId = dto.EventoId;
 
             try
             {
@@ -59,17 +68,16 @@ namespace EventosAPI.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!ParticipantesExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                var stillExists = await _context.Participantes.AnyAsync(p => p.Id == id);
+                if (!stillExists)
+                    return NotFound(new { message = $"El participante {id} fue eliminado durante la actualización" });
+
+                // Otra causa de concurrencia
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                    new { message = "Error de concurrencia al actualizar el participante" });
             }
 
-            return NoContent();
+            return Ok(participante);
         }
 
         // POST: api/Participantes

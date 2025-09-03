@@ -1,11 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using EventosAPI.Models;
+using EventosAPI.Models.DTOs;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using EventosAPI.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace EventosAPI.Controllers
 {
@@ -29,29 +30,42 @@ namespace EventosAPI.Controllers
 
         // GET: api/Eventos/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Evento>> GetEventos(int id)
+        public async Task<ActionResult<object>> GetEventos(int id)
         {
-            var eventos = await _context.Eventos.FindAsync(id);
+            var e = await _context.Eventos
+                .Where(x => x.Id == id)
+                .Select(x => new {
+                    x.Id,
+                    x.Nombre,
+                    x.Fecha,
+                    x.Lugar,
+                    Participantes = x.Participantes.Select(p => new { p.Id, p.Nombre, p.Email }),
+                    Organizadores = x.Organizadores.Select(o => new { o.Id, o.Nombre, o.Cargo })
+                })
+                .FirstOrDefaultAsync();
 
-            if (eventos == null)
-            {
-                return NotFound();
-            }
-
-            return eventos;
+            if (e == null) return NotFound();
+            return e;
         }
 
         // PUT: api/Eventos/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutEventos(int id, Evento eventos)
+        [HttpPut("{id:int}")]
+        public async Task<IActionResult> PutEvento(int id, [FromBody] UpdateEventoDto dto)
         {
-            if (id != eventos.Id)
-            {
-                return BadRequest();
-            }
+            // 1) Validación de modelo (JSON + DataAnnotations)
+            if (!ModelState.IsValid)
+                return ValidationProblem(ModelState);
 
-            _context.Entry(eventos).State = EntityState.Modified;
+            // 2) Buscar el evento por ID (solo una vez)
+            var evento = await _context.Eventos.FindAsync(id);
+            if (evento == null)
+                return NotFound(new { message = $"No existe un evento con id {id}" });
+
+            // 3) Mapear campos permitidos (evita overposting)
+            evento.Nombre = dto.Nombre;
+            evento.Fecha = dto.FechaEvento;
+            evento.Lugar = dto.Lugar;
 
             try
             {
@@ -59,17 +73,17 @@ namespace EventosAPI.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!EventosExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                // Revalidar existencia por si alguien lo borró durante la actualización
+                var stillExists = await _context.Eventos.AnyAsync(e => e.Id == id);
+                if (!stillExists)
+                    return NotFound(new { message = $"El evento {id} fue eliminado durante la actualización" });
+
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                    new { message = "Error de concurrencia al actualizar el evento" });
             }
 
-            return NoContent();
+            // Puedes devolver 204 si prefieres
+            return Ok(evento);
         }
 
         // POST: api/Eventos
